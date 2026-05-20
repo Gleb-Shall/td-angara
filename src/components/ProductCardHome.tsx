@@ -42,10 +42,10 @@ export default function ProductCardHome({ product, featured }: Props) {
   }
 
   return (
-    <div className="group relative bg-white rounded-2xl overflow-hidden border border-[var(--border)] hover:border-[var(--amber)]/40 hover:shadow-[0_20px_40px_-12px_rgba(28,43,26,0.15)] transition-all duration-300 flex flex-col h-full">
+    <div className="group relative bg-[var(--surface)] overflow-hidden border border-[var(--border)] hover:border-[var(--primary)]/60 transition-colors duration-300 flex flex-col h-full">
       <Link
         href={`/catalog/${product.id}`}
-        className={`relative overflow-hidden bg-[var(--cream)] block ${featured ? 'aspect-[16/9]' : 'aspect-[4/3]'}`}
+        className={`relative overflow-hidden bg-[var(--bg)] block ${featured ? 'aspect-[16/9]' : 'aspect-[4/3]'}`}
       >
         {image ? (
           <Image
@@ -64,7 +64,7 @@ export default function ProductCardHome({ product, featured }: Props) {
           </div>
         )}
         {outOfStock && (
-          <span className="absolute top-3 left-3 bg-zinc-800/85 text-white text-[11px] px-2.5 py-1 rounded-full font-medium tracking-wide">
+          <span className="absolute top-3 left-3 bg-[var(--bg)]/85 text-[var(--text)] text-[11px] px-2.5 py-1 font-medium tracking-wide">
             Нет в наличии
           </span>
         )}
@@ -72,37 +72,37 @@ export default function ProductCardHome({ product, featured }: Props) {
 
       <div className={`flex flex-col flex-1 ${featured ? 'p-6' : 'p-4'}`}>
         <Link href={`/catalog/${product.id}`} className="group/title">
-          <h3 className={`font-bold text-[var(--text)] group-hover/title:text-[var(--amber)] transition-colors line-clamp-1 mb-1.5 ${featured ? 'text-lg' : 'text-[15px]'}`}>
+          <h3 className={`font-bold text-[var(--text)] group-hover/title:text-[var(--primary)] transition-colors line-clamp-1 mb-1.5 ${featured ? 'text-lg' : 'text-[15px]'}`}>
             {product.name}
           </h3>
         </Link>
-        <p className="text-[var(--muted)] text-sm line-clamp-2 leading-relaxed flex-1 mb-4">
+        <p className="text-[var(--muted-fg)] text-sm line-clamp-2 leading-relaxed flex-1 mb-4">
           {product.description}
         </p>
 
         <div className="flex items-baseline gap-1 mb-3">
-          <span className={`font-black text-[var(--forest)] ${featured ? 'text-2xl' : 'text-xl'}`}>
+          <span className={`font-black text-[var(--text)] ${featured ? 'text-2xl' : 'text-xl'}`}>
             {price.toLocaleString('ru-RU')} ₽
           </span>
-          <span className="text-xs text-[var(--muted)]">/ {product.unit}</span>
+          <span className="text-xs text-[var(--muted-fg)]">/ {product.unit}</span>
         </div>
 
         {outOfStock ? (
           <Link
             href={`/catalog/${product.id}`}
-            className="inline-flex items-center justify-center gap-2 border border-[var(--border)] text-[var(--muted)] py-2.5 rounded-lg font-semibold text-sm hover:text-[var(--text)] hover:border-[var(--text)] transition-colors"
+            className="inline-flex items-center justify-center gap-2 border border-[var(--border)] text-[var(--muted-fg)] py-2.5 font-semibold text-sm hover:text-[var(--text)] hover:border-[var(--text)] transition-colors"
           >
             Подробнее <ArrowRight size={14} />
           </Link>
         ) : (
           <div className="flex items-stretch gap-2">
-            <div className="flex items-center border border-[var(--border)] rounded-lg overflow-hidden shrink-0">
+            <div className="flex items-center border border-[var(--border)] overflow-hidden shrink-0">
               <button
                 type="button"
                 onClick={() => changeQty(-step)}
                 disabled={quantity <= step}
                 aria-label="Уменьшить"
-                className="w-8 h-9 flex items-center justify-center hover:bg-[var(--cream)] disabled:opacity-30 transition-colors"
+                className="w-8 h-9 flex items-center justify-center hover:bg-[var(--bg)] disabled:opacity-30 transition-colors"
               >
                 <Minus size={13} />
               </button>
@@ -114,7 +114,7 @@ export default function ProductCardHome({ product, featured }: Props) {
                 onClick={() => changeQty(step)}
                 disabled={quantity >= stock}
                 aria-label="Увеличить"
-                className="w-8 h-9 flex items-center justify-center hover:bg-[var(--cream)] disabled:opacity-30 transition-colors"
+                className="w-8 h-9 flex items-center justify-center hover:bg-[var(--bg)] disabled:opacity-30 transition-colors"
               >
                 <Plus size={13} />
               </button>
@@ -122,7 +122,7 @@ export default function ProductCardHome({ product, featured }: Props) {
             <button
               type="button"
               onClick={handleAdd}
-              className="btn-press flex-1 inline-flex items-center justify-center gap-1.5 bg-[var(--forest)] hover:bg-[var(--amber)] text-white rounded-lg font-semibold text-sm transition-colors px-3"
+              className="btn-press flex-1 inline-flex items-center justify-center gap-1.5 bg-[var(--primary)] hover:bg-[var(--primary-dark)] text-[var(--text)] font-semibold text-sm transition-colors px-3"
             >
               <ShoppingCart size={14} />
               <span className="hidden sm:inline">В корзину</span>

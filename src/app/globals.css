@@ -1,85 +1,196 @@
 @import "tailwindcss";
 
 :root {
-  --forest: #1C2B1A;
-  --forest-light: #243622;
-  --amber: #C8893A;
-  --amber-dark: #A86E28;
-  --cream: #F5F2EE;
-  --cream-dark: #EDE9E3;
-  --text: #18181B;
-  --muted: #71717A;
-  --border: #E4E0DA;
+  /* === Dark industrial palette (reference: td-angara-817ee75f) === */
+  --bg:          #1D1B19;
+  --surface:     #2A2825;
+  --primary:     #C46A2D;
+  --primary-dark:#A85520;
+  --accent:      #E8D5C4;
+  --muted-fg:    #5C564F;
+  --border:      #3D3A36;
+  --text:        #F2EFE9;
+
+  /* aliases used throughout existing code */
+  --forest:      #1D1B19;
+  --forest-light:#2A2825;
+  --amber:       #C46A2D;
+  --amber-dark:  #A85520;
+  --cream:       #2A2825;
+  --cream-dark:  #1D1B19;
+  --muted:       #5C564F;
+
+  /* Motion */
+  --ease: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* ── V1 (green) palette scope ── */
+.v1 {
+  --forest:      #1C2B1A;
+  --forest-light:#243622;
+  --amber:       #C8893A;
+  --amber-dark:  #A86E28;
+  --cream:       #F5F2EE;
+  --cream-dark:  #EDE9E3;
+  --text:        #18181B;
+  --muted:       #71717A;
+  --border:      #E4E0DA;
+  --bg:          #F5F2EE;
+  --surface:     #EDE9E3;
+  --primary:     #C8893A;
+  --primary-dark:#A86E28;
+  --muted-fg:    #71717A;
+  background: #F5F2EE;
+  color: #18181B;
 }
 
 @theme inline {
-  --color-forest: var(--forest);
-  --color-amber: var(--amber);
-  --color-cream: var(--cream);
-  --color-muted: var(--muted);
-  --color-border: var(--border);
+  --font-display: var(--font-bebas);
+  --font-body:    var(--font-inter);
+  --color-primary: var(--primary);
+  --color-accent:  var(--accent);
+  --color-surface: var(--surface);
+  --color-border:  var(--border);
+  --color-muted:   var(--muted-fg);
+  --color-text:    var(--text);
+  --color-forest:  var(--forest);
+  --color-amber:   var(--amber);
+  --color-cream:   var(--cream);
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; background: var(--bg); }
 
 body {
-  background: var(--cream);
+  background: var(--bg);
   color: var(--text);
-  font-family: var(--font-outfit), system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
-html {
-  scroll-behavior: smooth;
+::selection { background: var(--primary); color: var(--text); }
+
+/* ── Display font utility ── */
+.font-display {
+  font-family: var(--font-bebas), sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
 }
 
-/* Stagger reveal for product cards */
+/* ── I-beam structural line ── */
+.beam-left {
+  border-left: 6px solid var(--primary);
+  padding-left: 1.25rem;
+}
+@media (min-width: 768px) {
+  .beam-left { border-left-width: 12px; padding-left: 2rem; }
+}
+
+/* ── Blueprint grid background ── */
+.bg-blueprint {
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(to right,  rgba(61,58,54,0.55) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(61,58,54,0.55) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.bg-blueprint-fine {
+  background-color: var(--surface);
+  background-image:
+    linear-gradient(to right,  rgba(61,58,54,0.4) 0.75px, transparent 0.75px),
+    linear-gradient(to bottom, rgba(61,58,54,0.4) 0.75px, transparent 0.75px);
+  background-size: 32px 32px;
+}
+
+/* ── Grain overlay ── */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.7'/></svg>");
+}
+
+/* ── Stagger reveal for product cards ── */
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
+.card-reveal { animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
-.card-reveal {
-  animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
+/* ── Button tactile press ── */
+.btn-press:active { transform: scale(0.98); }
 
-/* Button tactile press */
-.btn-press:active {
-  transform: scale(0.98);
-}
-
-/* Directional hover fill */
+/* ── Fill sweep ── */
 .btn-fill {
   position: relative;
   overflow: hidden;
   transition: color 0.3s ease;
 }
-
 .btn-fill::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--amber-dark);
+  background: var(--primary-dark);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 0;
 }
+.btn-fill:hover::before { transform: scaleX(1); }
+.btn-fill > * { position: relative; z-index: 1; }
 
-.btn-fill:hover::before {
-  transform: scaleX(1);
+/* ── Marquee ── */
+@keyframes marqueeX {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.anim-marquee { animation: marqueeX 40s linear infinite; }
+
+/* ── Hero reveal ── */
+@keyframes heroReveal {
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: heroReveal 900ms var(--ease) forwards;
+}
+.delay-1 { animation-delay: 80ms; }
+.delay-2 { animation-delay: 160ms; }
+.delay-3 { animation-delay: 240ms; }
+.delay-4 { animation-delay: 320ms; }
+.delay-5 { animation-delay: 400ms; }
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { animation: none; opacity: 1; transform: none; }
+  .anim-marquee { animation: none; }
 }
 
-.btn-fill > * {
-  position: relative;
-  z-index: 1;
+/* ── Focus ── */
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+
+/* ── Horizontal scroll strips ── */
+.scroll-x {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--surface);
 }
+.scroll-x::-webkit-scrollbar { height: 6px; }
+.scroll-x::-webkit-scrollbar-track { background: var(--surface); }
+.scroll-x::-webkit-scrollbar-thumb { background: var(--primary); }
+.scroll-snap-item { scroll-snap-align: start; }

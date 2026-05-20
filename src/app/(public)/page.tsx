@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { prisma } from '@/lib/prisma'
 import { ArrowRight, Truck, Award, Phone, Layers } from 'lucide-react'
-import ProductCardHome from '@/components/ProductCardHome'
+import ProductCardHomeV1 from '@/components/ProductCardHomeV1'
 
 export const revalidate = 0
 
@@ -14,25 +14,26 @@ const FEATURES = [
 ]
 
 export default async function HomePage() {
-  const products = await prisma.product.findMany({
-    where: { isActive: true },
-    take: 5,
-    orderBy: { createdAt: 'asc' },
-  })
+  let products: Awaited<ReturnType<typeof prisma.product.findMany>> = []
+  try {
+    products = await prisma.product.findMany({ where: { isActive: true }, take: 5, orderBy: { createdAt: 'asc' } })
+  } catch {
+    // DB unavailable
+  }
 
   const [featured, ...rest] = products
 
   return (
     <>
-      {/* Hero — split screen, text left / image right */}
+      {/* Hero */}
       <section className="min-h-[100dvh] grid md:grid-cols-2">
-        <div className="bg-[var(--forest)] flex flex-col justify-center px-8 md:px-16 py-24 md:py-0">
-          <p className="text-[var(--amber)] text-[11px] font-bold uppercase tracking-[0.25em] mb-6">
+        <div style={{ background: '#1C2B1A' }} className="flex flex-col justify-center px-8 md:px-16 py-24 md:py-0">
+          <p className="text-[#C8893A] text-[11px] font-bold uppercase tracking-[0.25em] mb-6">
             Пиломатериалы · Красноярск
           </p>
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-none text-white mb-8">
             ТОРГОВЫЙ<br />
-            <span className="text-[var(--amber)]">ДОМ</span><br />
+            <span className="text-[#C8893A]">ДОМ</span><br />
             АНГАРА
           </h1>
           <p className="text-white/55 text-base leading-relaxed mb-10 max-w-[42ch]">
@@ -40,17 +41,11 @@ export default async function HomePage() {
             Сосна и лиственница напрямую с производства.
           </p>
           <div className="flex flex-wrap gap-3">
-            <Link
-              href="/catalog"
-              className="btn-fill btn-press inline-flex items-center gap-2 bg-[var(--amber)] text-white px-7 py-3.5 rounded-lg font-semibold text-sm transition-colors"
-            >
+            <Link href="/catalog" className="btn-fill btn-press inline-flex items-center gap-2 bg-[#C8893A] text-white px-7 py-3.5 rounded-lg font-semibold text-sm transition-colors">
               <span>Смотреть каталог</span>
               <ArrowRight size={15} />
             </Link>
-            <a
-              href="tel:+79535850509"
-              className="btn-press inline-flex items-center gap-2 border border-white/20 text-white/80 hover:text-white hover:border-white/40 px-7 py-3.5 rounded-lg font-semibold text-sm transition-all duration-300"
-            >
+            <a href="tel:+79535850509" className="btn-press inline-flex items-center gap-2 border border-white/20 text-white/80 hover:text-white hover:border-white/40 px-7 py-3.5 rounded-lg font-semibold text-sm transition-all duration-300">
               <Phone size={15} />
               +7 (953) 585-05-09
             </a>
@@ -58,14 +53,8 @@ export default async function HomePage() {
         </div>
 
         <div className="relative min-h-[55vw] md:min-h-0 order-first md:order-last">
-          <Image
-            src="/products/XL.webp"
-            alt="Склад ТД Ангара"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[var(--forest)]/30 to-transparent" />
+          <Image src="/products/XL.webp" alt="Склад ТД Ангара" fill className="object-cover" priority />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1C2B1A]/30 to-transparent" />
           <div className="absolute bottom-8 left-8">
             <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-5 py-3">
               <p className="text-white text-sm font-semibold">Большой ассортимент в наличии</p>
@@ -75,12 +64,12 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Преимущества — border divider, no cards */}
-      <section className="bg-[var(--forest)]">
+      {/* Преимущества */}
+      <section style={{ background: '#1C2B1A' }}>
         <div className="max-w-7xl mx-auto px-6 divide-y divide-white/10 md:divide-y-0 md:grid md:grid-cols-4 md:divide-x md:divide-white/10">
           {FEATURES.map(({ icon: Icon, title, desc }) => (
             <div key={title} className="px-0 md:px-8 py-10 first:pl-0 last:pr-0">
-              <Icon size={22} className="text-[var(--amber)] mb-4" strokeWidth={1.5} />
+              <Icon size={22} className="text-[#C8893A] mb-4" strokeWidth={1.5} />
               <h3 className="font-bold text-white text-sm mb-2">{title}</h3>
               <p className="text-white/45 text-sm leading-relaxed">{desc}</p>
             </div>
@@ -88,73 +77,68 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Офис — editorial split */}
+      {/* О компании */}
       <section className="grid md:grid-cols-12 min-h-[380px]">
         <div className="md:col-span-5 relative min-h-[260px]">
           <Image src="/products/2.webp" alt="ТД Ангара" fill className="object-cover" />
         </div>
-        <div className="md:col-span-7 bg-[var(--cream-dark)] flex flex-col justify-center px-10 md:px-20 py-16">
-          <p className="text-[var(--amber)] text-[11px] font-bold uppercase tracking-[0.25em] mb-4">О компании</p>
-          <h2 className="text-3xl md:text-4xl font-black tracking-tight text-[var(--text)] mb-5 leading-snug">
+        <div style={{ background: '#EDE9E3' }} className="md:col-span-7 flex flex-col justify-center px-10 md:px-20 py-16">
+          <p className="text-[#C8893A] text-[11px] font-bold uppercase tracking-[0.25em] mb-4">О компании</p>
+          <h2 className="text-3xl md:text-4xl font-black tracking-tight text-[#18181B] mb-5 leading-snug">
             Работаем с 2010 года<br />в Красноярске
           </h2>
-          <p className="text-[var(--muted)] leading-relaxed mb-8 max-w-[52ch]">
+          <p className="text-[#71717A] leading-relaxed mb-8 max-w-[52ch]">
             Торговый дом «Ангара» — прямой поставщик пиломатериалов.
-            Собственный склад на ул. Маерчака, 109М. Обслуживаем строителей,
-            подрядчиков и частных клиентов.
+            Собственный склад на ул. Маерчака, 109М. Обслуживаем строителей, подрядчиков и частных клиентов.
           </p>
-          <Link href="/about" className="inline-flex items-center gap-2 text-[var(--text)] font-semibold text-sm hover:text-[var(--amber)] transition-colors group">
+          <Link href="/about" className="inline-flex items-center gap-2 text-[#18181B] font-semibold text-sm hover:text-[#C8893A] transition-colors group">
             Подробнее
             <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
           </Link>
         </div>
       </section>
 
-      {/* Товары — асимметричный bento */}
+      {/* Товары */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-end justify-between mb-12">
             <div>
-              <p className="text-[var(--amber)] text-[11px] font-bold uppercase tracking-[0.25em] mb-3">Ассортимент</p>
-              <h2 className="text-4xl font-black tracking-tight">Наши товары</h2>
+              <p className="text-[#C8893A] text-[11px] font-bold uppercase tracking-[0.25em] mb-3">Ассортимент</p>
+              <h2 className="text-4xl font-black tracking-tight text-[#18181B]">Наши товары</h2>
             </div>
-            <Link href="/catalog" className="hidden md:inline-flex items-center gap-2 text-[var(--muted)] hover:text-[var(--text)] font-medium text-sm transition-colors group">
-              Весь каталог
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
+            <Link href="/catalog" className="hidden md:inline-flex items-center gap-2 text-[#71717A] hover:text-[#18181B] font-medium text-sm transition-colors group">
+              Весь каталог <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
           </div>
 
-          {/* Bento grid: featured (7/12) + small (5/12), then 3 smaller */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
             {featured && (
               <div className="md:col-span-7 card-reveal" style={{ animationDelay: '0ms' }}>
-                <ProductCardHome product={featured} featured />
+                <ProductCardHomeV1 product={featured} featured />
               </div>
             )}
             {rest[0] && (
               <div className="md:col-span-5 card-reveal" style={{ animationDelay: '80ms' }}>
-                <ProductCardHome product={rest[0]} />
+                <ProductCardHomeV1 product={rest[0]} />
               </div>
             )}
             {rest.slice(1).map((p, i) => (
               <div key={p.id} className="md:col-span-4 card-reveal" style={{ animationDelay: `${(i + 2) * 80}ms` }}>
-                <ProductCardHome product={p} />
+                <ProductCardHomeV1 product={p} />
               </div>
             ))}
           </div>
 
-          <div className="md:hidden mt-8 text-center">
-            <Link href="/catalog" className="inline-flex items-center gap-2 text-[var(--text)] font-semibold hover:text-[var(--amber)] transition-colors">
-              Весь каталог <ArrowRight size={14} />
-            </Link>
-          </div>
+          {products.length === 0 && (
+            <p className="text-center text-[#71717A] py-16">Товары загружаются...</p>
+          )}
         </div>
       </section>
 
-      {/* CTA — photo overlay */}
+      {/* CTA */}
       <section className="relative min-h-[380px] flex items-center overflow-hidden">
         <Image src="/products/1.webp" alt="" fill className="object-cover" />
-        <div className="absolute inset-0 bg-[var(--forest)]/80" />
+        <div className="absolute inset-0 bg-[#1C2B1A]/80" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
           <div className="max-w-xl">
             <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white mb-4 leading-tight">
@@ -163,10 +147,7 @@ export default async function HomePage() {
             <p className="text-white/55 mb-8 leading-relaxed">
               Добавьте товары в корзину и оставьте заявку — перезвоним в течение часа
             </p>
-            <Link
-              href="/catalog"
-              className="btn-press inline-flex items-center gap-2 bg-[var(--amber)] hover:bg-[var(--amber-dark)] text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300"
-            >
+            <Link href="/catalog" className="btn-press inline-flex items-center gap-2 bg-[#C8893A] hover:bg-[#A86E28] text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300">
               Перейти в каталог <ArrowRight size={17} />
             </Link>
           </div>

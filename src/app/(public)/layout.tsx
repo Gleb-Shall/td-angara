@@ -1,12 +1,12 @@
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
+import HeaderV1 from '@/components/HeaderV1'
+import FooterV1 from '@/components/FooterV1'
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <Header />
+    <div style={{ fontFamily: 'var(--font-outfit), system-ui, sans-serif' }} className="v1 flex flex-col min-h-screen">
+      <HeaderV1 />
       <main className="flex-1">{children}</main>
-      <Footer />
-    </>
+      <FooterV1 />
+    </div>
   )
 }

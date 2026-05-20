@@ -16,18 +16,23 @@ interface Props {
 export default async function CatalogPage({ searchParams }: Props) {
   const { q, sort } = await searchParams
 
-  const products = await prisma.product.findMany({
-    where: {
-      isActive: true,
-      ...(q ? { name: { contains: q, mode: 'insensitive' } } : {}),
-    },
-    orderBy:
-      sort === 'price_asc'
-        ? { price: 'asc' }
-        : sort === 'price_desc'
-        ? { price: 'desc' }
-        : { createdAt: 'desc' },
-  })
+  let products: Awaited<ReturnType<typeof prisma.product.findMany>> = []
+  try {
+    products = await prisma.product.findMany({
+      where: {
+        isActive: true,
+        ...(q ? { name: { contains: q, mode: 'insensitive' } } : {}),
+      },
+      orderBy:
+        sort === 'price_asc'
+          ? { price: 'asc' }
+          : sort === 'price_desc'
+          ? { price: 'desc' }
+          : { createdAt: 'desc' },
+    })
+  } catch {
+    // DB unavailable
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
