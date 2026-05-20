@@ -7,10 +7,10 @@ import ProductCard from '@/components/ProductCard'
 export const revalidate = 0
 
 const FEATURES = [
-  { icon: Award, title: 'Качество по ГОСТ', desc: 'Категории C и D, влажность 12–14% после камерной сушки' },
-  { icon: Layers, title: 'Собственное производство', desc: 'Сосна и лиственница из Сибири — с пилорамы напрямую' },
-  { icon: Truck, title: 'Доставка по Красноярску', desc: 'На объект, с физлицами и юрлицами, без посредников' },
-  { icon: Phone, title: 'Без выходных', desc: 'Принимаем заявки ежедневно — менеджер ответит быстро' },
+  { icon: Award, title: 'Качество по ГОСТ', desc: 'Категории C и D, влажность 12–14%' },
+  { icon: Layers, title: 'Своё производство', desc: 'Сосна и лиственница из Сибири' },
+  { icon: Truck, title: 'Доставка', desc: 'По Красноярску и краю' },
+  { icon: Phone, title: 'Без выходных', desc: 'Ответим на любой вопрос' },
 ]
 
 export default async function HomePage() {
@@ -24,40 +24,61 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Hero — split screen, text left / image right */}
-      <section className="min-h-[100dvh] grid md:grid-cols-2">
-        <div className="bg-[var(--forest)] flex flex-col justify-center px-8 md:px-16 py-24 md:py-0">
-          <p className="text-[var(--amber)] text-[11px] font-bold uppercase tracking-[0.25em] mb-6">
-            Пиломатериалы · Красноярск
-          </p>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-none text-white mb-8">
-            ТОРГОВЫЙ<br />
-            <span className="text-[var(--amber)]">ДОМ</span><br />
-            АНГАРА
-          </h1>
-          <p className="text-white/55 text-base leading-relaxed mb-10 max-w-[42ch]">
-            Рейка, брусок, вагонка, имитация бруса, планкен и террасная доска.
-            Сосна и лиственница напрямую с производства.
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <Link
-              href="/catalog"
-              className="btn-fill btn-press inline-flex items-center gap-2 bg-[var(--amber)] text-white px-7 py-3.5 rounded-lg font-semibold text-sm transition-colors"
-            >
-              <span>Смотреть каталог</span>
-              <ArrowRight size={15} />
-            </Link>
-            <a
-              href="tel:+79535850509"
-              className="btn-press inline-flex items-center gap-2 border border-white/20 text-white/80 hover:text-white hover:border-white/40 px-7 py-3.5 rounded-lg font-semibold text-sm transition-all duration-300"
-            >
-              <Phone size={15} />
-              +7 (953) 585-05-09
-            </a>
+      {/* Hero — split screen */}
+      <section className="min-h-[100dvh] grid md:grid-cols-[55%_45%]">
+        {/* Left: content */}
+        <div className="bg-[var(--forest)] relative flex flex-col justify-between px-8 md:px-16 pt-16 pb-12 order-2 md:order-1">
+          {/* Decorative large number */}
+          <div className="absolute top-8 right-8 text-[120px] md:text-[160px] font-black text-white/[0.04] leading-none select-none pointer-events-none">
+            14
+          </div>
+
+          <div className="relative z-10">
+            <p className="text-[var(--amber)] text-[11px] font-bold uppercase tracking-[0.3em] mb-8">
+              Пиломатериалы · Красноярск
+            </p>
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none text-white mb-6">
+              ТД<br />
+              <span className="text-[var(--amber)]">АН-</span><br />
+              ГАРА
+            </h1>
+            <p className="text-white/50 text-sm leading-loose mb-10 max-w-[38ch] font-light tracking-wide">
+              Рейка · Брусок · Вагонка · Имитация бруса<br />
+              Планкен · Террасная доска
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/catalog"
+                className="btn-press inline-flex items-center gap-2 bg-[var(--amber)] hover:bg-[var(--amber-dark)] text-white px-7 py-3.5 rounded-lg font-bold text-sm transition-colors duration-300"
+              >
+                Каталог <ArrowRight size={15} />
+              </Link>
+              <a
+                href="tel:+79535850509"
+                className="btn-press inline-flex items-center gap-2 border border-white/15 text-white/70 hover:text-white hover:border-white/35 px-7 py-3.5 rounded-lg font-medium text-sm transition-all duration-300"
+              >
+                <Phone size={14} /> +7 (953) 585-05-09
+              </a>
+            </div>
+          </div>
+
+          {/* Bottom stat bar */}
+          <div className="relative z-10 mt-16 pt-8 border-t border-white/10 grid grid-cols-3 gap-4">
+            {[
+              { n: '2010', label: 'год основания' },
+              { n: '14%', label: 'влажность после сушки' },
+              { n: '109М', label: 'ул. Маерчака' },
+            ].map(({ n, label }) => (
+              <div key={label}>
+                <div className="text-2xl font-black text-white tracking-tight">{n}</div>
+                <div className="text-white/35 text-[11px] mt-0.5 leading-snug">{label}</div>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="relative min-h-[55vw] md:min-h-0 order-first md:order-last">
+        {/* Right: photo */}
+        <div className="relative min-h-[50vw] md:min-h-0 order-1 md:order-2">
           <Image
             src="/products/XL.webp"
             alt="Склад ТД Ангара"
@@ -65,52 +86,52 @@ export default async function HomePage() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[var(--forest)]/30 to-transparent" />
-          <div className="absolute bottom-8 left-8">
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-5 py-3">
-              <p className="text-white text-sm font-semibold">Большой ассортимент в наличии</p>
-              <p className="text-white/60 text-xs mt-0.5">Оптовые и розничные поставки</p>
-            </div>
+          <div className="absolute inset-0 bg-[var(--forest)]/20" />
+          {/* Floating card */}
+          <div className="absolute bottom-8 right-8 bg-[var(--forest)]/80 backdrop-blur-sm border border-white/10 rounded-xl px-5 py-4 max-w-[200px]">
+            <p className="text-[var(--amber)] text-[10px] font-bold uppercase tracking-wider mb-1">В наличии</p>
+            <p className="text-white text-sm font-semibold leading-snug">Большой ассортимент на складе</p>
           </div>
         </div>
       </section>
 
-      {/* Преимущества — border divider, no cards */}
-      <section className="bg-[var(--forest)]">
-        <div className="max-w-7xl mx-auto px-6 divide-y divide-white/10 md:divide-y-0 md:grid md:grid-cols-4 md:divide-x md:divide-white/10">
-          {FEATURES.map(({ icon: Icon, title, desc }) => (
-            <div key={title} className="px-0 md:px-8 py-10 first:pl-0 last:pr-0">
-              <Icon size={22} className="text-[var(--amber)] mb-4" strokeWidth={1.5} />
-              <h3 className="font-bold text-white text-sm mb-2">{title}</h3>
-              <p className="text-white/45 text-sm leading-relaxed">{desc}</p>
-            </div>
-          ))}
+      {/* Преимущества — dividers, no cards */}
+      <section className="bg-[var(--forest)] border-t border-white/10">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10">
+            {FEATURES.map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="px-6 py-10 first:pl-0 last:pr-0">
+                <Icon size={20} className="text-[var(--amber)] mb-4" strokeWidth={1.5} />
+                <h3 className="font-bold text-white text-sm mb-1.5">{title}</h3>
+                <p className="text-white/40 text-xs leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Офис — editorial split */}
-      <section className="grid md:grid-cols-12 min-h-[380px]">
-        <div className="md:col-span-5 relative min-h-[260px]">
+      {/* Editorial split — компания */}
+      <section className="grid md:grid-cols-[42%_58%] min-h-[380px]">
+        <div className="relative min-h-[280px]">
           <Image src="/products/2.webp" alt="ТД Ангара" fill className="object-cover" />
         </div>
-        <div className="md:col-span-7 bg-[var(--cream-dark)] flex flex-col justify-center px-10 md:px-20 py-16">
+        <div className="bg-[var(--cream)] flex flex-col justify-center px-10 md:px-20 py-16">
           <p className="text-[var(--amber)] text-[11px] font-bold uppercase tracking-[0.25em] mb-4">О компании</p>
-          <h2 className="text-3xl md:text-4xl font-black tracking-tight text-[var(--text)] mb-5 leading-snug">
-            Работаем с 2010 года<br />в Красноярске
+          <h2 className="text-3xl md:text-4xl font-black tracking-tight text-[var(--text)] mb-5 leading-tight">
+            Работаем с 2010 года,<br />знаем материал
           </h2>
-          <p className="text-[var(--muted)] leading-relaxed mb-8 max-w-[52ch]">
-            Торговый дом «Ангара» — прямой поставщик пиломатериалов.
-            Собственный склад на ул. Маерчака, 109М. Обслуживаем строителей,
-            подрядчиков и частных клиентов.
+          <p className="text-[var(--muted)] leading-relaxed mb-8 max-w-[50ch] text-sm">
+            Собственный склад на ул. Маерчака, 109М. Прямые поставки без посредников.
+            Обслуживаем строителей, подрядчиков и частных клиентов по всему Красноярскому краю.
           </p>
           <Link href="/about" className="inline-flex items-center gap-2 text-[var(--text)] font-semibold text-sm hover:text-[var(--amber)] transition-colors group">
             Подробнее
-            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
+            <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform duration-300" />
           </Link>
         </div>
       </section>
 
-      {/* Товары — асимметричный bento */}
+      {/* Товары — bento asymmetric */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-end justify-between mb-12">
@@ -120,11 +141,10 @@ export default async function HomePage() {
             </div>
             <Link href="/catalog" className="hidden md:inline-flex items-center gap-2 text-[var(--muted)] hover:text-[var(--text)] font-medium text-sm transition-colors group">
               Весь каталог
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
+              <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
           </div>
 
-          {/* Bento grid: featured (7/12) + small (5/12), then 3 smaller */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
             {featured && (
               <div className="md:col-span-7 card-reveal" style={{ animationDelay: '0ms' }}>
@@ -145,29 +165,29 @@ export default async function HomePage() {
 
           <div className="md:hidden mt-8 text-center">
             <Link href="/catalog" className="inline-flex items-center gap-2 text-[var(--text)] font-semibold hover:text-[var(--amber)] transition-colors">
-              Весь каталог <ArrowRight size={14} />
+              Весь каталог <ArrowRight size={13} />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* CTA — photo overlay */}
-      <section className="relative min-h-[380px] flex items-center overflow-hidden">
+      {/* CTA */}
+      <section className="relative min-h-[360px] flex items-center overflow-hidden">
         <Image src="/products/1.webp" alt="" fill className="object-cover" />
-        <div className="absolute inset-0 bg-[var(--forest)]/80" />
+        <div className="absolute inset-0 bg-[var(--forest)]/85" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
           <div className="max-w-xl">
             <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white mb-4 leading-tight">
               Готовы<br />сделать заказ?
             </h2>
-            <p className="text-white/55 mb-8 leading-relaxed">
+            <p className="text-white/50 mb-8 text-sm leading-relaxed max-w-[40ch]">
               Добавьте товары в корзину и оставьте заявку — перезвоним в течение часа
             </p>
             <Link
               href="/catalog"
-              className="btn-press inline-flex items-center gap-2 bg-[var(--amber)] hover:bg-[var(--amber-dark)] text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-300"
+              className="btn-press inline-flex items-center gap-2 bg-[var(--amber)] hover:bg-[var(--amber-dark)] text-white px-8 py-4 rounded-lg font-bold transition-colors duration-300"
             >
-              Перейти в каталог <ArrowRight size={17} />
+              Перейти в каталог <ArrowRight size={16} />
             </Link>
           </div>
         </div>
