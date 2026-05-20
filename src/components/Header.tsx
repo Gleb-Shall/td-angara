@@ -1,8 +1,9 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
-import { Menu, X, TreePine } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import CartIcon from './CartIcon'
 
 const NAV = [
@@ -17,9 +18,18 @@ export default function Header() {
   return (
     <header className="bg-[var(--forest)] text-white sticky top-0 z-50 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 font-bold text-lg tracking-tight hover:text-[var(--amber)] transition-colors">
-          <TreePine size={24} className="text-[var(--amber)]" />
-          ТД Ангара
+        <Link href="/" className="flex items-center gap-3 hover:opacity-85 transition-opacity">
+          <Image
+            src="/brand/landing_logo_x2.png"
+            alt="ТД Ангара"
+            width={36}
+            height={36}
+            className="brightness-0 invert"
+          />
+          <span className="font-bold text-base tracking-wide leading-tight">
+            АНГАРА<br />
+            <span className="text-[10px] font-normal tracking-[0.15em] text-white/70">ТОРГОВЫЙ ДОМ</span>
+          </span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
