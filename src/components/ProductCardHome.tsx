@@ -21,18 +21,11 @@ export default function ProductCardHome({ product, featured }: Props) {
   const outOfStock = !product.isActive || stock === 0
 
   const [quantity, setQuantity] = useState(step)
-  const { addItem, updateQuantity, items } = useCartStore((s) => ({ addItem: s.addItem, updateQuantity: s.updateQuantity, items: s.items }))
-  const cartItem = items.find((i) => i.productId === product.id)
+  const addItem = useCartStore((s) => s.addItem)
 
   const changeQty = (delta: number) => {
     const next = Math.round((quantity + delta) * 1e10) / 1e10
     if (next >= step && next <= stock) setQuantity(next)
-  }
-
-  const changeCartQty = (delta: number) => {
-    if (!cartItem) return
-    const next = Math.round((cartItem.quantity + delta) * 1e10) / 1e10
-    if (next >= step && next <= stock) updateQuantity(product.id, next)
   }
 
   const handleAdd = () => {
@@ -101,30 +94,6 @@ export default function ProductCardHome({ product, featured }: Props) {
           >
             Подробнее <ArrowRight size={14} />
           </Link>
-        ) : cartItem ? (
-          <div className="flex items-center border border-[var(--primary)] overflow-hidden">
-            <button
-              type="button"
-              onClick={() => changeCartQty(-step)}
-              disabled={cartItem.quantity <= step}
-              aria-label="Уменьшить"
-              className="w-8 h-9 flex items-center justify-center hover:bg-[var(--bg)] disabled:opacity-30 transition-colors"
-            >
-              <Minus size={13} />
-            </button>
-            <span className="text-xs font-semibold flex-1 text-center tabular-nums px-1 text-[var(--primary)]">
-              {cartItem.quantity} {product.unit}
-            </span>
-            <button
-              type="button"
-              onClick={() => changeCartQty(step)}
-              disabled={cartItem.quantity >= stock}
-              aria-label="Увеличить"
-              className="w-8 h-9 flex items-center justify-center hover:bg-[var(--bg)] disabled:opacity-30 transition-colors"
-            >
-              <Plus size={13} />
-            </button>
-          </div>
         ) : (
           <div className="flex items-stretch gap-2">
             <div className="flex items-center border border-[var(--border)] overflow-hidden shrink-0">
