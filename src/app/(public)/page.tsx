@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { prisma } from '@/lib/prisma'
 import { ArrowRight, Truck, Award, Phone, Layers } from 'lucide-react'
-import ProductCard from '@/components/ProductCard'
+import ProductCardHome from '@/components/ProductCardHome'
 
 export const revalidate = 0
 
@@ -128,17 +128,17 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
             {featured && (
               <div className="md:col-span-7 card-reveal" style={{ animationDelay: '0ms' }}>
-                <ProductCard product={featured} featured />
+                <ProductCardHome product={featured} featured />
               </div>
             )}
             {rest[0] && (
               <div className="md:col-span-5 card-reveal" style={{ animationDelay: '80ms' }}>
-                <ProductCard product={rest[0]} />
+                <ProductCardHome product={rest[0]} />
               </div>
             )}
             {rest.slice(1).map((p, i) => (
               <div key={p.id} className="md:col-span-4 card-reveal" style={{ animationDelay: `${(i + 2) * 80}ms` }}>
-                <ProductCard product={p} />
+                <ProductCardHome product={p} />
               </div>
             ))}
           </div>

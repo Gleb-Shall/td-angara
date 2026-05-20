@@ -92,11 +92,25 @@ export default function CartPageClient() {
         <div className="lg:col-span-2 space-y-4">
           {items.map((item) => (
             <div key={item.productId} className="bg-white rounded-xl border border-[var(--border)] p-4 flex gap-4">
-              <div className="relative w-20 h-20 rounded-lg overflow-hidden shrink-0 bg-[var(--cream)]">
-                <Image src={item.image} alt={item.name} fill className="object-cover" sizes="80px" />
-              </div>
+              <Link
+                href={`/catalog/${item.productId}`}
+                className="relative w-20 h-20 rounded-lg overflow-hidden shrink-0 bg-[var(--cream)] group"
+              >
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  sizes="80px"
+                />
+              </Link>
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-sm line-clamp-1 mb-1">{item.name}</h3>
+                <Link
+                  href={`/catalog/${item.productId}`}
+                  className="block hover:text-[var(--amber)] transition-colors"
+                >
+                  <h3 className="font-semibold text-sm line-clamp-1 mb-1">{item.name}</h3>
+                </Link>
                 <p className="text-[var(--muted)] text-sm mb-3">
                   {item.price.toLocaleString('ru-RU')} ₽ / {item.unit}
                 </p>
