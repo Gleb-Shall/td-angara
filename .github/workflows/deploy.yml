@@ -22,7 +22,7 @@ jobs:
 
             npm ci --production=false
 
-            npx prisma migrate deploy
+            npx prisma db push
 
             npm run build
 
