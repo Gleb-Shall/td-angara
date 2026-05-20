@@ -43,14 +43,16 @@ export default function ContactsPage() {
           </div>
         </div>
 
-        <div className="rounded-xl overflow-hidden border border-[var(--border)] h-64 md:h-auto bg-[var(--cream)]">
+        <div className="rounded-xl overflow-hidden border border-[var(--border)] h-64 md:h-auto bg-[var(--cream)] min-h-[280px]">
           <iframe
-            src="https://yandex.ru/map-widget/v1/?ll=92.852572%2C56.010569&z=16&pt=92.852572,56.010569,pm2rdl"
+            src="https://yandex.ru/map-widget/v1/?ll=92.834866%2C56.045438&z=17&l=map&pt=92.834866%2C56.045438%2Cpm2rdm"
             width="100%"
             height="100%"
-            frameBorder="0"
-            allowFullScreen
-            title="Карта"
+            style={{ border: 0 }}
+            allow="geolocation"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="ТД Ангара на карте — ул. Маерчака, 109М, Красноярск"
           />
         </div>
       </div>
