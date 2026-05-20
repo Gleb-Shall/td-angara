@@ -21,18 +21,11 @@ export default function ProductCardHomeV1({ product, featured }: Props) {
   const outOfStock = !product.isActive || stock === 0
 
   const [quantity, setQuantity] = useState(step)
-  const { addItem, updateQuantity, items } = useCartStore((s) => ({ addItem: s.addItem, updateQuantity: s.updateQuantity, items: s.items }))
-  const cartItem = items.find((i) => i.productId === product.id)
+  const addItem = useCartStore((s) => s.addItem)
 
   const changeQty = (delta: number) => {
     const next = Math.round((quantity + delta) * 1e10) / 1e10
     if (next >= step && next <= stock) setQuantity(next)
-  }
-
-  const changeCartQty = (delta: number) => {
-    if (!cartItem) return
-    const next = Math.round((cartItem.quantity + delta) * 1e10) / 1e10
-    if (next >= step && next <= stock) updateQuantity(product.id, next)
   }
 
   const handleAdd = () => {
@@ -80,20 +73,6 @@ export default function ProductCardHomeV1({ product, featured }: Props) {
           <Link href={`/catalog/${product.id}`} className="inline-flex items-center justify-center gap-2 border border-[#E4E0DA] text-[#71717A] py-2.5 rounded-lg font-semibold text-sm hover:text-[#18181B] hover:border-[#18181B] transition-colors">
             Подробнее <ArrowRight size={14} />
           </Link>
-        ) : cartItem ? (
-          <div className="flex items-center border border-[#C8893A] rounded-lg overflow-hidden">
-            <button type="button" onClick={() => changeCartQty(-step)} disabled={cartItem.quantity <= step} aria-label="Уменьшить"
-              className="w-8 h-9 flex items-center justify-center hover:bg-[#F5F2EE] disabled:opacity-30 transition-colors">
-              <Minus size={13} />
-            </button>
-            <span className="text-xs font-semibold flex-1 text-center tabular-nums px-1 text-[#C8893A]">
-              {cartItem.quantity} {product.unit}
-            </span>
-            <button type="button" onClick={() => changeCartQty(step)} disabled={cartItem.quantity >= stock} aria-label="Увеличить"
-              className="w-8 h-9 flex items-center justify-center hover:bg-[#F5F2EE] disabled:opacity-30 transition-colors">
-              <Plus size={13} />
-            </button>
-          </div>
         ) : (
           <div className="flex items-stretch gap-2">
             <div className="flex items-center border border-[#E4E0DA] rounded-lg overflow-hidden shrink-0">
