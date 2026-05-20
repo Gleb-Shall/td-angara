@@ -15,7 +15,7 @@ export default function AdminSidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className="w-56 shrink-0 bg-[var(--forest)] text-white flex flex-col min-h-screen">
+    <aside className="w-56 shrink-0 text-white flex flex-col min-h-screen" style={{ background: '#1C2B1A' }}>
       <div className="p-5 border-b border-white/10">
         <Link href="/" className="flex items-center gap-2 font-bold text-lg">
           <TreePine size={20} className="text-[var(--amber)]" />
