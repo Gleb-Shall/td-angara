@@ -5,7 +5,7 @@ import './globals.css'
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'], variable: '--font-inter' })
 const bebasNeue = Bebas_Neue({ weight: '400', subsets: ['latin'], variable: '--font-bebas' })
-const outfit = Outfit({ subsets: ['latin', 'cyrillic'], variable: '--font-outfit' })
+const outfit = Outfit({ subsets: ['latin', 'latin-ext'], variable: '--font-outfit' })
 
 export const metadata: Metadata = {
   title: 'ТД Ангара — Пиломатериалы в Красноярске',
