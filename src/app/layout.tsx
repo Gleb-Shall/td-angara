@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Outfit } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin', 'cyrillic'] })
+const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' })
 
 export const metadata: Metadata = {
   title: 'ТД Ангара — Пиломатериалы в Красноярске',
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ru" className="h-full">
-      <body className={`${inter.className} min-h-full flex flex-col`}>
+      <body className={`${outfit.variable} min-h-full flex flex-col`}>
         {children}
         <Toaster position="bottom-right" />
       </body>

@@ -2,12 +2,14 @@
 
 :root {
   --forest: #1C2B1A;
+  --forest-light: #243622;
   --amber: #C8893A;
+  --amber-dark: #A86E28;
   --cream: #F5F2EE;
-  --text: #1A1A1A;
-  --muted: #6B6B6B;
-  --border: #E2DDD7;
-  --white: #FFFFFF;
+  --cream-dark: #EDE9E3;
+  --text: #18181B;
+  --muted: #71717A;
+  --border: #E4E0DA;
 }
 
 @theme inline {
@@ -25,10 +27,59 @@
 body {
   background: var(--cream);
   color: var(--text);
-  font-family: Inter, system-ui, sans-serif;
+  font-family: var(--font-outfit), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Stagger reveal for product cards */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-reveal {
+  animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Button tactile press */
+.btn-press:active {
+  transform: scale(0.98);
+}
+
+/* Directional hover fill */
+.btn-fill {
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s ease;
+}
+
+.btn-fill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--amber-dark);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+
+.btn-fill:hover::before {
+  transform: scaleX(1);
+}
+
+.btn-fill > * {
+  position: relative;
+  z-index: 1;
 }
