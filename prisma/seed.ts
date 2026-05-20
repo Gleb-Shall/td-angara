@@ -13,7 +13,7 @@ async function main() {
       unit: 'пог.м',
       stock: 5000,
       step: 1,
-      images: ['https://images.unsplash.com/photo-1541123437800-1bb1317badc2?w=600&q=80'],
+      images: ['https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=800&q=80'],
       isActive: true,
     },
     {
@@ -23,7 +23,7 @@ async function main() {
       unit: 'пог.м',
       stock: 3000,
       step: 1,
-      images: ['https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=80'],
+      images: ['https://images.unsplash.com/photo-1541123437800-1bb1317badc2?w=800&q=80'],
       isActive: true,
     },
     {
@@ -33,7 +33,7 @@ async function main() {
       unit: 'м²',
       stock: 800,
       step: 0.5,
-      images: ['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80'],
+      images: ['https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80'],
       isActive: true,
     },
     {
@@ -43,7 +43,7 @@ async function main() {
       unit: 'м²',
       stock: 600,
       step: 0.5,
-      images: ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80'],
+      images: ['https://images.unsplash.com/photo-1530268729831-4b0b9e170218?w=800&q=80'],
       isActive: true,
     },
     {
@@ -53,7 +53,7 @@ async function main() {
       unit: 'м²',
       stock: 400,
       step: 0.5,
-      images: ['https://images.unsplash.com/photo-1564419320461-6870880221ad?w=600&q=80'],
+      images: ['https://images.unsplash.com/photo-1618219740975-d40978bb7378?w=800&q=80'],
       isActive: true,
     },
     {
@@ -63,7 +63,7 @@ async function main() {
       unit: 'м²',
       stock: 300,
       step: 0.5,
-      images: ['https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80'],
+      images: ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80'],
       isActive: true,
     },
   ]

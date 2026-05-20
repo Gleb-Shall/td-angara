@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { Trash2, Upload, X } from 'lucide-react'
+import { Upload, X } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { Product } from '@prisma/client'
 
@@ -29,22 +29,37 @@ export default function ProductForm({ product }: Props) {
     isActive: product?.isActive ?? true,
   })
   const [images, setImages] = useState<string[]>(product?.images ?? [])
+  const [pendingFiles, setPendingFiles] = useState<File[]>([])
+  const [pendingPreviews, setPendingPreviews] = useState<string[]>([])
   const [uploading, setUploading] = useState(false)
   const [saving, setSaving] = useState(false)
 
   const knownUnit = UNITS.includes(form.unit)
 
-  const uploadFile = async (file: File) => {
-    if (!isEdit) {
-      toast.error('Сначала сохраните товар, затем добавьте фото')
-      return
-    }
-    setUploading(true)
+  const uploadFileTo = async (file: File, productId: string): Promise<string | null> => {
     const fd = new FormData()
     fd.append('file', file)
-    const res = await fetch(`/api/admin/products/${product.id}/upload`, { method: 'POST', body: fd })
+    const res = await fetch(`/api/admin/products/${productId}/upload`, { method: 'POST', body: fd })
     const data = await res.json()
-    if (res.ok) setImages((prev) => [...prev, data.url])
+    if (!res.ok) return null
+    return data.url as string
+  }
+
+  const handleFileSelect = (file: File) => {
+    if (isEdit) {
+      uploadExisting(file)
+    } else {
+      const preview = URL.createObjectURL(file)
+      setPendingFiles((prev) => [...prev, file])
+      setPendingPreviews((prev) => [...prev, preview])
+    }
+  }
+
+  const uploadExisting = async (file: File) => {
+    if (!product) return
+    setUploading(true)
+    const url = await uploadFileTo(file, product.id)
+    if (url) setImages((prev) => [...prev, url])
     else toast.error('Ошибка загрузки')
     setUploading(false)
   }
@@ -59,6 +74,12 @@ export default function ProductForm({ product }: Props) {
         body: JSON.stringify({ ...form, images: next }),
       })
     }
+  }
+
+  const removePending = (index: number) => {
+    URL.revokeObjectURL(pendingPreviews[index])
+    setPendingFiles((prev) => prev.filter((_, i) => i !== index))
+    setPendingPreviews((prev) => prev.filter((_, i) => i !== index))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -86,14 +107,25 @@ export default function ProductForm({ product }: Props) {
       }
     )
 
-    setSaving(false)
-    if (res.ok) {
-      toast.success(isEdit ? 'Товар обновлён' : 'Товар создан')
-      router.push('/admin/products')
-      router.refresh()
-    } else {
+    if (!res.ok) {
+      setSaving(false)
       toast.error('Ошибка сохранения')
+      return
     }
+
+    if (!isEdit && pendingFiles.length > 0) {
+      setUploading(true)
+      const { id: newId } = await res.json()
+      for (const file of pendingFiles) {
+        await uploadFileTo(file, newId)
+      }
+      setUploading(false)
+    }
+
+    setSaving(false)
+    toast.success(isEdit ? 'Товар обновлён' : 'Товар создан')
+    router.push('/admin/products')
+    router.refresh()
   }
 
   return (
@@ -206,7 +238,7 @@ export default function ProductForm({ product }: Props) {
         <div className="flex flex-wrap gap-3 mb-4">
           {images.map((url) => (
             <div key={url} className="relative w-24 h-24 rounded-lg overflow-hidden group border border-gray-200">
-              <Image src={url} alt="" fill className="object-cover" sizes="96px" />
+              <Image src={url} alt="" fill className="object-cover" sizes="96px" unoptimized />
               <button
                 type="button"
                 onClick={() => removeImage(url)}
@@ -217,39 +249,46 @@ export default function ProductForm({ product }: Props) {
             </div>
           ))}
 
-          {isEdit && (
-            <button
-              type="button"
-              onClick={() => fileRef.current?.click()}
-              disabled={uploading}
-              className="w-24 h-24 rounded-lg border-2 border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 hover:border-[var(--amber)] hover:text-[var(--amber)] transition-colors disabled:opacity-50"
-            >
-              <Upload size={20} className="mb-1" />
-              <span className="text-xs">{uploading ? 'Загрузка...' : 'Добавить'}</span>
-            </button>
-          )}
-        </div>
+          {pendingPreviews.map((preview, i) => (
+            <div key={preview} className="relative w-24 h-24 rounded-lg overflow-hidden group border border-[var(--amber)] border-2">
+              <Image src={preview} alt="" fill className="object-cover" sizes="96px" unoptimized />
+              <button
+                type="button"
+                onClick={() => removePending(i)}
+                className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity"
+              >
+                <X size={20} className="text-white" />
+              </button>
+            </div>
+          ))}
 
-        {!isEdit && (
-          <p className="text-sm text-gray-400">Сначала сохраните товар, затем добавьте фотографии.</p>
-        )}
+          <button
+            type="button"
+            onClick={() => fileRef.current?.click()}
+            disabled={uploading}
+            className="w-24 h-24 rounded-lg border-2 border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 hover:border-[var(--amber)] hover:text-[var(--amber)] transition-colors disabled:opacity-50"
+          >
+            <Upload size={20} className="mb-1" />
+            <span className="text-xs">{uploading ? 'Загрузка...' : 'Добавить'}</span>
+          </button>
+        </div>
 
         <input
           ref={fileRef}
           type="file"
           accept="image/*"
           className="hidden"
-          onChange={(e) => e.target.files?.[0] && uploadFile(e.target.files[0])}
+          onChange={(e) => e.target.files?.[0] && handleFileSelect(e.target.files[0])}
         />
       </div>
 
       <div className="flex gap-3">
         <button
           type="submit"
-          disabled={saving}
+          disabled={saving || uploading}
           className="bg-[var(--forest)] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[var(--amber)] transition-colors disabled:opacity-60"
         >
-          {saving ? 'Сохранение...' : isEdit ? 'Сохранить' : 'Создать товар'}
+          {saving ? 'Сохранение...' : uploading ? 'Загрузка фото...' : isEdit ? 'Сохранить' : 'Создать товар'}
         </button>
         <button
           type="button"
