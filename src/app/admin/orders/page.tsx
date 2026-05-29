@@ -57,7 +57,7 @@ export default async function AdminOrdersPage({ searchParams }: Props) {
             href={`/admin/orders?status=${s}`}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
               (status ?? 'ALL') === s
-                ? 'bg-[var(--forest)] text-white'
+                ? 'bg-[#1C2B1A] text-white'
                 : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
             }`}
           >
@@ -99,7 +99,7 @@ export default async function AdminOrdersPage({ searchParams }: Props) {
                 <td className="px-4 py-3 text-right">
                   <Link
                     href={`/admin/orders/${order.id}`}
-                    className="text-[var(--amber)] hover:underline font-medium"
+                    className="text-[#2563EB] hover:underline font-medium"
                   >
                     Открыть
                   </Link>
@@ -120,7 +120,7 @@ export default async function AdminOrdersPage({ searchParams }: Props) {
               key={p}
               href={`/admin/orders?status=${status ?? 'ALL'}&page=${p}`}
               className={`w-8 h-8 rounded flex items-center justify-center text-sm ${
-                p === currentPage ? 'bg-[var(--forest)] text-white' : 'bg-white border border-gray-200 hover:bg-gray-50'
+                p === currentPage ? 'bg-[#1C2B1A] text-white' : 'bg-white border border-gray-200 hover:bg-gray-50'
               }`}
             >
               {p}

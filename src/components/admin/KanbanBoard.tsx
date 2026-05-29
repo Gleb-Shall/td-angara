@@ -116,7 +116,7 @@ export default function KanbanBoard({ initialOrders }: { initialOrders: KanbanOr
         return (
           <div
             key={col.status}
-            className={`shrink-0 w-72 flex flex-col rounded-xl border ${col.border} transition-all duration-150 ${isOver ? 'ring-2 ring-[var(--amber)] ring-offset-1' : ''}`}
+            className={`shrink-0 w-72 flex flex-col rounded-xl border ${col.border} transition-all duration-150 ${isOver ? 'ring-2 ring-[#C8893A] ring-offset-1' : ''}`}
             onDragOver={(e) => { e.preventDefault(); setDragOverCol(col.status) }}
             onDragLeave={(e) => {
               if (!e.currentTarget.contains(e.relatedTarget as Node)) setDragOverCol(null)
@@ -148,13 +148,13 @@ export default function KanbanBoard({ initialOrders }: { initialOrders: KanbanOr
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-1">
                       <GripVertical size={13} className="text-gray-200 shrink-0" />
-                      <span className="font-bold text-sm text-[var(--forest)]">#{order.number}</span>
+                      <span className="font-bold text-sm text-[#1C2B1A]">#{order.number}</span>
                     </div>
                     <Link
                       href={`/admin/orders/${order.id}`}
                       onClick={(e) => e.stopPropagation()}
                       title="Открыть заявку"
-                      className="text-gray-300 hover:text-[var(--amber)] transition-colors"
+                      className="text-gray-300 hover:text-[#C8893A] transition-colors"
                     >
                       <ExternalLink size={13} />
                     </Link>
@@ -181,7 +181,7 @@ export default function KanbanBoard({ initialOrders }: { initialOrders: KanbanOr
 
                   {/* Footer: amount + quick move */}
                   <div className="flex items-center justify-between gap-2 pt-2 border-t border-gray-50">
-                    <span className="font-bold text-[13px] text-[var(--forest)]">
+                    <span className="font-bold text-[13px] text-[#1C2B1A]">
                       {order.totalAmount.toLocaleString('ru-RU')} ₽
                     </span>
                     <select
@@ -191,7 +191,7 @@ export default function KanbanBoard({ initialOrders }: { initialOrders: KanbanOr
                         moveOrder(order.id, e.target.value as OrderStatus)
                       }}
                       onClick={(e) => e.stopPropagation()}
-                      className="text-[11px] border border-gray-200 rounded px-1.5 py-0.5 bg-white text-gray-500 cursor-pointer hover:border-[var(--amber)] focus:outline-none focus:border-[var(--amber)] transition-colors"
+                      className="text-[11px] border border-gray-200 rounded px-1.5 py-0.5 bg-white text-gray-500 cursor-pointer hover:border-[#C8893A] focus:outline-none focus:border-[#C8893A] transition-colors"
                     >
                       <option value="NEW">Новая</option>
                       <option value="IN_PROGRESS">В обработке</option>

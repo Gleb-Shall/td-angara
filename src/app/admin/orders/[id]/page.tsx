@@ -46,7 +46,7 @@ export default async function OrderDetailPage({ params }: Props) {
             <div>
               <dt className="text-gray-400">Телефон</dt>
               <dd>
-                <a href={`tel:${order.clientPhone}`} className="text-[var(--amber)] font-medium">
+                <a href={`tel:${order.clientPhone}`} className="text-[#C8893A] font-medium">
                   {order.clientPhone}
                 </a>
               </dd>
@@ -67,7 +67,7 @@ export default async function OrderDetailPage({ params }: Props) {
         {/* Статус */}
         <div className="bg-white rounded-xl border border-gray-200 p-5">
           <h2 className="font-semibold mb-3 text-gray-700">Статус</h2>
-          <p className="text-2xl font-bold text-[var(--forest)]">{STATUS_LABELS[order.status]}</p>
+          <p className="text-2xl font-bold text-[#1C2B1A]">{STATUS_LABELS[order.status]}</p>
           <p className="text-sm text-gray-400 mt-1">
             Обновлено: {new Date(order.updatedAt).toLocaleString('ru-RU')}
           </p>
@@ -99,7 +99,7 @@ export default async function OrderDetailPage({ params }: Props) {
           <tfoot>
             <tr className="border-t border-gray-200">
               <td colSpan={3} className="py-3 font-semibold text-right">Итого:</td>
-              <td className="py-3 font-bold text-[var(--forest)] text-right text-base">
+              <td className="py-3 font-bold text-[#1C2B1A] text-right text-base">
                 {Number(order.totalAmount).toLocaleString('ru-RU')} ₽
               </td>
             </tr>
@@ -113,7 +113,7 @@ export default async function OrderDetailPage({ params }: Props) {
         <ol className="relative border-l border-gray-200 ml-2 space-y-4">
           {order.history.map((h) => (
             <li key={h.id} className="ml-4">
-              <div className="absolute w-2.5 h-2.5 bg-[var(--amber)] rounded-full -left-1.5 mt-1" />
+              <div className="absolute w-2.5 h-2.5 bg-[#C8893A] rounded-full -left-1.5 mt-1" />
               <p className="text-sm">{h.event}</p>
               <p className="text-xs text-gray-400 mt-0.5">
                 {new Date(h.createdAt).toLocaleString('ru-RU')}

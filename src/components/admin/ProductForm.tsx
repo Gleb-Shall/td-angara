@@ -139,7 +139,7 @@ export default function ProductForm({ product }: Props) {
             required
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[var(--amber)]"
+            className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#C8893A]"
           />
         </div>
 
@@ -149,7 +149,7 @@ export default function ProductForm({ product }: Props) {
             value={form.description}
             onChange={(e) => setForm({ ...form, description: e.target.value })}
             rows={4}
-            className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[var(--amber)] resize-none"
+            className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#C8893A] resize-none"
           />
         </div>
 
@@ -163,7 +163,7 @@ export default function ProductForm({ product }: Props) {
               step="0.01"
               value={form.price}
               onChange={(e) => setForm({ ...form, price: e.target.value })}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[var(--amber)]"
+              className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#C8893A]"
             />
           </div>
           <div>
@@ -174,7 +174,7 @@ export default function ProductForm({ product }: Props) {
                 if (e.target.value === '__custom__') setForm({ ...form, unit: '' })
                 else setForm({ ...form, unit: e.target.value, customUnit: '' })
               }}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[var(--amber)] bg-white"
+              className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#C8893A] bg-white"
             >
               {UNITS.map((u) => <option key={u} value={u}>{u}</option>)}
               <option value="__custom__">Другая...</option>
@@ -184,7 +184,7 @@ export default function ProductForm({ product }: Props) {
                 value={form.customUnit}
                 onChange={(e) => setForm({ ...form, customUnit: e.target.value })}
                 placeholder="Введите единицу"
-                className="mt-2 w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[var(--amber)]"
+                className="mt-2 w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#C8893A]"
               />
             )}
           </div>
@@ -199,7 +199,7 @@ export default function ProductForm({ product }: Props) {
               step="any"
               value={form.stock}
               onChange={(e) => setForm({ ...form, stock: e.target.value })}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[var(--amber)]"
+              className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#C8893A]"
             />
           </div>
           <div>
@@ -214,7 +214,7 @@ export default function ProductForm({ product }: Props) {
               required
               value={form.step}
               onChange={(e) => setForm({ ...form, step: e.target.value })}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[var(--amber)]"
+              className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#C8893A]"
             />
           </div>
         </div>
@@ -225,7 +225,7 @@ export default function ProductForm({ product }: Props) {
             type="checkbox"
             checked={form.isActive}
             onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
-            className="w-4 h-4 accent-[var(--forest)]"
+            className="w-4 h-4 accent-[#1C2B1A]"
           />
           <label htmlFor="isActive" className="text-sm font-medium">Активен (отображается в каталоге)</label>
         </div>
@@ -250,7 +250,7 @@ export default function ProductForm({ product }: Props) {
           ))}
 
           {pendingPreviews.map((preview, i) => (
-            <div key={preview} className="relative w-24 h-24 rounded-lg overflow-hidden group border border-[var(--amber)] border-2">
+            <div key={preview} className="relative w-24 h-24 rounded-lg overflow-hidden group border border-[#C8893A] border-2">
               <Image src={preview} alt="" fill className="object-cover" sizes="96px" unoptimized />
               <button
                 type="button"
@@ -266,7 +266,7 @@ export default function ProductForm({ product }: Props) {
             type="button"
             onClick={() => fileRef.current?.click()}
             disabled={uploading}
-            className="w-24 h-24 rounded-lg border-2 border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 hover:border-[var(--amber)] hover:text-[var(--amber)] transition-colors disabled:opacity-50"
+            className="w-24 h-24 rounded-lg border-2 border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 hover:border-[#C8893A] hover:text-[#C8893A] transition-colors disabled:opacity-50"
           >
             <Upload size={20} className="mb-1" />
             <span className="text-xs">{uploading ? 'Загрузка...' : 'Добавить'}</span>
@@ -286,7 +286,7 @@ export default function ProductForm({ product }: Props) {
         <button
           type="submit"
           disabled={saving || uploading}
-          className="bg-[var(--forest)] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[var(--amber)] transition-colors disabled:opacity-60"
+          className="bg-[#1C2B1A] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#C8893A] transition-colors disabled:opacity-60"
         >
           {saving ? 'Сохранение...' : uploading ? 'Загрузка фото...' : isEdit ? 'Сохранить' : 'Создать товар'}
         </button>

@@ -15,7 +15,7 @@ export default async function AdminProductsPage() {
         <h1 className="text-2xl font-bold">Товары</h1>
         <Link
           href="/admin/products/new"
-          className="flex items-center gap-2 bg-[var(--forest)] text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-[var(--amber)] transition-colors"
+          className="flex items-center gap-2 bg-[#1C2B1A] text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-[#2563EB] transition-colors"
         >
           <Plus size={16} /> Добавить товар
         </Link>
@@ -53,7 +53,7 @@ export default async function AdminProductsPage() {
                 <td className="px-4 py-3 text-right">
                   <Link
                     href={`/admin/products/${p.id}`}
-                    className="text-[var(--amber)] hover:underline font-medium"
+                    className="text-[#2563EB] hover:underline font-medium"
                   >
                     Редактировать
                   </Link>

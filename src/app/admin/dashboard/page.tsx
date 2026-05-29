@@ -28,8 +28,8 @@ export default async function DashboardPage() {
   }))
 
   const STATS = [
-    { icon: Package, label: 'Товаров', value: totalProducts, color: 'text-[var(--amber)]' },
-    { icon: ClipboardList, label: 'Всего заявок', value: totalOrders, color: 'text-[var(--amber)]' },
+    { icon: Package, label: 'Товаров', value: totalProducts, color: 'text-gray-400' },
+    { icon: ClipboardList, label: 'Всего заявок', value: totalOrders, color: 'text-gray-400' },
     { icon: Bell, label: 'Новых', value: newOrders, color: 'text-blue-500', highlight: newOrders > 0 },
     { icon: TrendingUp, label: 'Завершено', value: doneOrders, color: 'text-green-500' },
   ]

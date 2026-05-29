@@ -15,10 +15,10 @@ export default function AdminSidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className="w-56 shrink-0 bg-[var(--forest)] text-white flex flex-col min-h-screen">
+    <aside className="w-56 shrink-0 bg-[#1C2B1A] text-white flex flex-col min-h-screen">
       <div className="p-5 border-b border-white/10">
         <Link href="/" className="flex items-center gap-2 font-bold text-lg">
-          <TreePine size={20} className="text-[var(--amber)]" />
+          <TreePine size={20} className="text-[#C8893A]" />
           ТД Ангара
         </Link>
         <p className="text-white/40 text-xs mt-0.5">Админ-панель</p>

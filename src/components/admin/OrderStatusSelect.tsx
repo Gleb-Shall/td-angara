@@ -45,7 +45,7 @@ export default function OrderStatusSelect({ id, currentStatus }: Props) {
       value={status}
       disabled={loading}
       onChange={(e) => handleChange(e.target.value as OrderStatus)}
-      className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[var(--amber)] bg-white disabled:opacity-60"
+      className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#C8893A] bg-white disabled:opacity-60"
     >
       {Object.values(OrderStatus).map((s) => (
         <option key={s} value={s}>{STATUS_LABELS[s]}</option>
